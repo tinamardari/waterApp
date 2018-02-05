@@ -26,13 +26,15 @@
             android:background="@color/grey"
             android:scaleType="centerInside"
             android:src="@drawable/waterdrop"
-            android:tint="@color/colorPrimaryLight" />
+            android:tint="@color/colorPrimary" />
 
         <TextView
             android:id="@+id/countWater"
             android:layout_gravity="center_vertical|center_horizontal"
             android:layout_width="wrap_content"
             android:textSize="24sp"
+            android:textColor="@android:color/white"
+
             android:layout_marginTop="20dp"
             android:layout_height="wrap_content"
             tools:text="2"/>
@@ -44,5 +46,11 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         tools:text="Hydrate while charging reminder sent 0 times"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Notification"
+        android:id="@+id/notificationButton"/>
 
 </LinearLayout>

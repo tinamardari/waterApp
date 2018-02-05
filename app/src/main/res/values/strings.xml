@@ -3,6 +3,8 @@
     <string name="intent_title">Intent</string>
     <string name="alarm">Alarm</string>
     <string name="infoText">Press the water after you\'ve hydrated</string>
+    <string name="notification_title">Drink water</string>
+    <string name="notification_content">Water is life! Dont forget to drink water</string>
 
     <plurals name="charging_remider">
         <item quantity="zero">Hydrate while charging reminder sent %d times</item>

@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.provider.AlarmClock;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
+    public static final String REMIND_ACTION = "remind_action";
     private ImageButton waterButton;
     private TextView waterGlassesTextview;
     private TextView waterRemindersTextview;
@@ -41,11 +43,22 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
                 incrementGlasses();
             }
         });
+
+        Button button = findViewById(R.id.notificationButton);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NotificationUtils.remindNotification(MainActivity.this);
+            }
+        });
     }
 
     private void incrementGlasses() {
         Toast.makeText(this, "Glup Glup Glup", Toast.LENGTH_SHORT).show();
         //TODO IntentService
+        Intent intent = new Intent(this, WaterReminderIntentService.class);
+        intent.setAction(REMIND_ACTION);
+        startService(intent);
     }
 
     private void updateReminderCounter() {
