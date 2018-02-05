@@ -44,12 +44,13 @@ public class MainActivity extends AppCompatActivity implements SharedPreferences
     }
 
     private void incrementGlasses() {
-        int curentGlasses = PreferenceUtils.getWaterGlasses(this);
-        PreferenceUtils.setWaterGlasses(this, curentGlasses + 1);
+        Toast.makeText(this, "Glup Glup Glup", Toast.LENGTH_SHORT).show();
+        //TODO IntentService
     }
 
     private void updateReminderCounter() {
-        String formattedWaterReminders = getResources().getQuantityString(R.plurals.charging_remider,PreferenceUtils.getWaterReminders(this) );
+        int remindersCounter = PreferenceUtils.getWaterReminders(this);
+        String formattedWaterReminders = getResources().getQuantityString(R.plurals.charging_remider, remindersCounter, remindersCounter);
         waterRemindersTextview.setText(formattedWaterReminders);
     }
 
