@@ -1,4 +1,4 @@
-package com.example.cmardari.myapplication;
+package com.example.cmardari.myapplication.utilities;
 
 
 import android.app.Notification;
@@ -12,6 +12,9 @@ import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
+
+import com.example.cmardari.myapplication.MainActivity;
+import com.example.cmardari.myapplication.R;
 
 public class NotificationUtils {
 
