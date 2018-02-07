@@ -1,12 +1,25 @@
 package com.example.cmardari.myapplication;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.Intent;
+import android.content.res.Configuration;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.Interpolator;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -37,10 +50,14 @@ public class MainActivity extends AppCompatActivity implements MainView {
         waterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                presenter.incrementGlasses();
+
+                presenter.onWaterClick();
+                presenter.animate(waterButton);
+                presenter.animate(waterGlassesTextview);
             }
         });
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -48,13 +65,12 @@ public class MainActivity extends AppCompatActivity implements MainView {
         inflater.inflate(R.menu.main_menu, menu);
 
         return true;
-
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        Log.d("MainActivity", "OnResume");
         presenter.updateChargingImageview();
         presenter.registerReceiver();
     }
@@ -100,4 +116,10 @@ public class MainActivity extends AppCompatActivity implements MainView {
     public void resetData(MenuItem item) {
         presenter.resetSharedPreferences();
     }
+
+    public void openAnimation(MenuItem item) {
+        Intent intent = new Intent(this, AnimationActivity.class);
+        startActivity(intent);
+    }
+
 }

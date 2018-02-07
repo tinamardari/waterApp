@@ -1,11 +1,11 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Water Reminder</string>
     <string name="intent_title">Intent</string>
     <string name="alarm">Alarm</string>
     <string name="infoText">Press the water after you\'ve hydrated</string>
     <string name="notification_title">Drink water</string>
     <string name="notification_content">Water is life! Dont forget to drink water</string>
-
+    <string name="good_job">Well done!</string>
     <plurals name="charging_remider">
         <item quantity="zero">Hydrate while charging reminder sent %d times</item>
         <item quantity="one">Hydrate while charging reminder sent %d time</item>

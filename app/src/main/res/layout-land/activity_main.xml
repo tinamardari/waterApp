@@ -4,32 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/grey"
+    android:gravity="center"
+    android:orientation="vertical"
     android:padding="16dp">
 
-    <TextView
-
-        android:id="@+id/text_info"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:background="@drawable/rounded_card"
-        android:padding="20dp"
-        android:text="@string/infoText"
-        android:textAlignment="center" />
 
     <FrameLayout
         android:id="@+id/drop_framelayout"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@id/charging_layout"
-        android:layout_below="@id/text_info"
+        android:layout_width="300dp"
+        android:layout_height="350dp"
+        android:layout_alignParentLeft="true"
         android:layout_centerInParent="true"
-        android:background="@drawable/rounded_card"
-        >
+        android:layout_marginRight="20dp"
+        android:background="@drawable/rounded_card">
 
         <ImageButton
             android:id="@+id/buttonWater"
@@ -47,27 +34,37 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|center_horizontal"
             android:layout_marginTop="20dp"
-
             android:textColor="@android:color/white"
-            android:textSize="24sp"
+            android:textSize="18sp"
             tools:text="2" />
     </FrameLayout>
 
     <LinearLayout
-        android:id="@+id/charging_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_toEndOf="@id/drop_framelayout"
+        android:layout_toRightOf="@id/drop_framelayout"
         android:background="@drawable/rounded_card"
-        android:orientation="horizontal"
+        android:gravity="center_horizontal|center_vertical"
+        android:orientation="vertical"
         android:padding="20dp">
+
+        <TextView
+            android:id="@+id/text_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:text="@string/infoText"
+            android:textAlignment="center" />
 
         <ImageView
             android:id="@+id/charging_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingEnd="10dp"
-            android:paddingRight="10dp"
+
             android:src="@drawable/ic_charging_gray"
             tools:ignore="RtlSymmetry" />
 
@@ -75,7 +72,8 @@
             android:id="@+id/reminderText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingBottom="5dp"
+            android:textAlignment="center"
+            tools:ignore="RtlHardcoded"
             tools:text="Hydrate while charging reminder sent 0 times" />
     </LinearLayout>
 

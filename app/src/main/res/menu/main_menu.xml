@@ -7,6 +7,14 @@
         android:id="@+id/reset_item"
         android:checkable="false"
         android:title="Reset"
-        app:showAsAction="always"
+        app:showAsAction="ifRoom"
         android:onClick="resetData" />
+
+    <item
+        android:id="@+id/animation_item"
+        android:checkable="false"
+        android:title="Animation"
+        android:icon="@drawable/ic_animation_item"
+        app:showAsAction="always"
+        android:onClick="openAnimation" />
 </menu>

@@ -1,20 +1,29 @@
 package com.example.cmardari.myapplication;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.os.BatteryManager;
 import android.os.Build;
 import android.preference.PreferenceManager;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.cmardari.myapplication.services.WaterReminderIntentService;
+import com.example.cmardari.myapplication.utilities.DisplayUtilities;
 import com.example.cmardari.myapplication.utilities.PreferenceUtils;
 import com.example.cmardari.myapplication.utilities.ReminderUtilities;
 
 public class MainPresenter implements SharedPreferences.OnSharedPreferenceChangeListener {
+
+    private String LOG_TAG = MainPresenter.class.getSimpleName();
     private MainView view;
     private SharedPreferences preferences;
     private ReminderUtilities reminderUtilities;
@@ -81,7 +90,7 @@ public class MainPresenter implements SharedPreferences.OnSharedPreferenceChange
     }
 
     void incrementGlasses() {
-        Toast.makeText(view.getContext(), "Glup Glup Glup", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(view.getContext(), "Glup Glup Glup", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(view.getContext(), WaterReminderIntentService.class);
         intent.setAction(REMIND_ACTION);
         view.getContext().startService(intent);
@@ -108,15 +117,59 @@ public class MainPresenter implements SharedPreferences.OnSharedPreferenceChange
     }
 
     public void updateChargingImageview() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        Log.d(LOG_TAG, "updateChargingimageview");
+        /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             BatteryManager batteryManager = (BatteryManager) view.getContext().getSystemService(Context.BATTERY_SERVICE);
-            showCharging(batteryManager.isCharging());
-        } else {
+            Log.d(LOG_TAG, "Plugged " + batteryManager.isCharging());
+            showCharging(batteryManager.getIntProperty(BatteryManager.));
+        } else */
+        {
             IntentFilter ifilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
             Intent intent = view.getContext().registerReceiver(null, ifilter);
-            int batteryStatus = intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
-            boolean isCharging = batteryStatus == BatteryManager.BATTERY_STATUS_CHARGING;
+            int plugged = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1);
+
+            boolean isCharging = plugged == BatteryManager.BATTERY_PLUGGED_AC ||
+                    plugged == BatteryManager.BATTERY_PLUGGED_USB ||
+                    (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 &&
+                            plugged == BatteryManager.BATTERY_PLUGGED_WIRELESS);
+
             showCharging(isCharging);
         }
     }
+
+    public void onWaterClick() {
+        if (view.getContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            showToast(Gravity.LEFT | Gravity.BOTTOM,
+                    (int) DisplayUtilities.getPixels(view.getContext(), 100),
+                    (int) DisplayUtilities.getPixels(view.getContext(), 15));
+        } else {
+            showToast(Gravity.BOTTOM,
+                    (int) DisplayUtilities.getPixels(view.getContext(), 0),
+                    (int) DisplayUtilities.getPixels(view.getContext(), 110));
+        }
+        incrementGlasses();
+    }
+
+    private void showToast(int gravity, int xOffset, int yOffset) {
+        CustomToast toast = new CustomToast(view.getContext());
+        toast.makeToast(R.mipmap.ic_thumb, R.string.good_job, gravity, xOffset, yOffset);
+    }
+
+    public void animate(View view) {
+        ObjectAnimator animationL = ObjectAnimator.ofFloat(view, "rotation", 0f, 30.0f);
+        animationL.setDuration(250);
+
+        ObjectAnimator animationR = ObjectAnimator.ofFloat(view, "rotation", 30.0f, -30.0f);
+        animationR.setDuration(250);
+
+        ObjectAnimator animationL2 = ObjectAnimator.ofFloat(view, "rotation", -30.0f, 0.0f);
+        animationL.setDuration(200);
+
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.play(animationL).before(animationR);
+        animatorSet.play(animationR).before(animationL2);
+        animatorSet.start();
+    }
+
 }
+
